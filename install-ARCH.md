@@ -1,12 +1,16 @@
-# Install ARCH Linux - MY WAY (encrypted with sd-encrypt + systemd-boot)
+# Install ARCH Linux - MY WAY 
+Features:
+- encrypted (with sd-encrypt)
+- systemd-boot
+
 The official installation guide (https://wiki.archlinux.org/index.php/Installation_Guide) contains a more verbose description.
 
+## Prerequisites
 - Download the archiso image from https://www.archlinux.org/
 - Copy to a usb-drive
 ```
 dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux
 ```
-
 - Boot from the usb. If the usb fails to boot, make sure that secure boot is disabled in the BIOS configuration.
 
 ## Set keymap
@@ -21,7 +25,9 @@ iwctl
 ```
 
 ## Create partitions
-- fdisk /dev/sdX
+```
+fdisk /dev/sdX
+```
 - g # create GPT partition table
 - n # new EFI partition 
 - +512M # size
@@ -65,8 +71,7 @@ mount /dev/sdX1 /mnt/boot
 ```
 
 ## Install the system 
-also includes stuff needed for starting wifi when first booting into the newly installed system
-Unless vim and zsh are desired these can be removed from the command
+also includes some optional stuff
 ```
 pacstrap /mnt base base-devel linux linux-firmware lvm2 vim nano git iwd htop
 ```
