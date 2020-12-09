@@ -1,4 +1,4 @@
-# Install ARCH Linux with encrypted file-system and UEFI
+# Install ARCH Linux - MY WAY (encrypted with sd-encrypt + systemd-boot)
 # The official installation guide (https://wiki.archlinux.org/index.php/Installation_Guide) contains a more verbose description.
 
 # Download the archiso image from https://www.archlinux.org/
@@ -7,7 +7,7 @@ dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux
 
 # Boot from the usb. If the usb fails to boot, make sure that secure boot is disabled in the BIOS configuration.
 
-# Set swedish keymap
+# Set keymap
 loadkeys de-latin1
 
 # Configure wifi ...
