@@ -10,21 +10,26 @@ dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux
 - Boot from the usb. If the usb fails to boot, make sure that secure boot is disabled in the BIOS configuration.
 
 ## Set keymap
+```
 loadkeys de-latin1
+```
 
-## Configure wifi ...
-iwctl # https://wiki.archlinux.org/index.php/Iwd#iwctl
+## Configure wifi 
+guide: https://wiki.archlinux.org/index.php/Iwd#iwctl
+```
+iwctl
+```
 
 ## Create partitions
-fdisk /dev/sdX
-g # create GPT partition table
-n # new EFI partition 
-+512M # size
-t # change type
-1 # EFI partition type (code EF)
-n # new partition for root
-p # print
-w # write
+- fdisk /dev/sdX
+- g # create GPT partition table
+- n # new EFI partition 
+- +512M # size
+- t # change type
+- 1 # EFI partition type (code EF)
+- n # new partition for root
+- p # print
+- w # write
 
 ```
 mkfs.vfat -F32 /dev/sdX1
@@ -66,7 +71,7 @@ Unless vim and zsh are desired these can be removed from the command
 pacstrap /mnt base base-devel linux linux-firmware lvm2 vim nano git iwd htop
 ```
 
-## 'install' fstab
+## Generate fstab
 ```
 genfstab -pU /mnt >> /mnt/etc/fstab
 ```
@@ -117,26 +122,27 @@ https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#LVM_on
 ```
 nano /etc/mkinitcpio.conf
 ```
-Add 'systemd' 'keyboard' 'sd-vconsole' 'sd-encrypt' 'sd-lvm2' before filesystems
-Example: HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)
+Add `systemd` `keyboard` `sd-vconsole` `sd-encrypt` `sd-lvm2` before filesystems.
+
+Example: `HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)`
 
 ### Regenerate initrd image
 ```
 mkinitcpio -p linux
 ```
 
-## setup `systemd-boot` as bootloader (https://wiki.archlinux.org/index.php/Systemd-boot)
+## setup **systemd-boot** as bootloader (https://wiki.archlinux.org/index.php/Systemd-boot)
 ```
 bootctl install
 ```
 
-### add file `/boot/loader/loader.conf`
+### add file __/boot/loader/loader.conf__
 ```
 default  arch
 timeout  3
 ```
 
-### add file `/boot/loader/entries/arch.conf`
+### add file __/boot/loader/entries/arch.conf__
 ```
 title   Arch Linux
 linux   /vmlinuz-linux
